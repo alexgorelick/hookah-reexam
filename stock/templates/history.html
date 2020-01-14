@@ -1,0 +1,11 @@
+{% extends 'page.html' %}
+{% block content %}
+		<h1> История {{ obj.name }} </h1>
+        <ul>
+        {% for history in obj.history.all %}
+            <li> {{ history }} </li>
+        {% empty %}
+            <li> История пуста </li>
+        {% endfor %}
+        </ul>
+{% endblock %}

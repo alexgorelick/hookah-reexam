@@ -1,0 +1,58 @@
+{% extends 'page.html' %}
+{% block content %}
+    <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+    <script>
+        var costs = [{% for f in food %} {{ f.cost }}, {% endfor %}];
+
+        $(document).ready(function() {
+            $("#add").click(function() {
+                $("#food tr:last-child").before($("<tr class='tdr_index'><td class='tdr_index'><select>{% for f in food %}<option> {{ f }} </option>{% endfor %}</select></td><td class='tdr_index'><input class='s' type='number' min='0' value='0'/></td><td class='tdr_index'> 0 руб. </td></tr>"));
+            });
+            $(".s").change(function() {
+                alert( "Handler for .change() called." );
+            });
+        });
+    </script>
+
+	<h1> Новый счет </h1>
+    <form method="post"> {% csrf_token %}
+    	{{ form.as_p }}
+    	<h2> Кальяны </h2>
+        <table id="hookah" class="table_index">
+            <tr class="tdr_index">
+                <td class="tdr_index">
+                    <b> Кальян </b>
+                </td>
+                <td class="tdr_index">
+                    <b> Стоимость </b>
+                </td>
+            </tr>
+            <tr class="tdr_index">
+                <td colspan="2" class="tdr_index">
+                    <p id="add1">Добавить новый кальян</LI></p> 
+                </td>
+            </tr>
+        <table>
+    	<h2> Еда </h2>
+        <table id="food" class="table_index">
+            <tr class="tdr_index">
+                <td class="tdr_index">
+                	<b> Название товара </b>
+                </td>
+                <td class="tdr_index">
+                	<b> Количество товара </b>
+                </td>
+                <td class="tdr_index">
+                    <b> Cтоимость </b>
+                </td>
+            </tr>
+			<tr class="tdr_index">
+				<td colspan="3" class="tdr_index">
+					<p id="add">Добавить новый товар</p> 
+				</td>
+			</tr>
+		<table>
+        <h2> Итого: 0 руб. </h2>
+		<p><input type="submit" value="Открыть новый счет"></p>
+    </form>
+{% endblock %}

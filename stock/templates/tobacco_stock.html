@@ -1,0 +1,27 @@
+{% extends 'page.html' %}
+{% load static %}
+
+{% block content %}
+		<h1> Табачный склад </h1>
+        <input type="text" id="myInput" onkeyup="myFunction('tobacco_table')" placeholder="Поиск по названию..">
+        <table id="tobacco_table" class="table_index">
+            <tr class="tdr_index">
+                <td class="tdr_index">
+                	<b> Название </b>
+                </td>
+                <td class="tdr_index">
+                	<b> Количество </b>
+                </td>
+                <td class="tdr_index">
+                	<b> Стоимость </b>
+                </td>
+            </tr>
+			{% for tobacco in tobaccos %}
+			<tr class="tdr_index">
+				<td class="tdr_index"><a href="{% url 'history' 0 tobacco.id %}"> {{ tobacco.name }} </a></td>
+				<td class="tdr_index"> {{ tobacco.weight }} грамм </td>
+				<td class="tdr_index"> {{ tobacco.cost }} </td>
+			</tr>
+			{% endfor %}
+		<table>
+{% endblock %}

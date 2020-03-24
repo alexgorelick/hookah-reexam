@@ -20,7 +20,6 @@ def food_stock(request):
     print(food[2].history.all())
     return HttpResponse(render(request, 'food_stock.html', {"food" : food}))
 
-@login_required
 def new_bill(request):
     if request.method == 'GET':
         form = BillForm()

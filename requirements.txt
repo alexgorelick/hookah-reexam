@@ -1,18 +1,24 @@
 asn1crypto==0.24.0
 beautifulsoup4==4.7.1
 bleach==3.1.0
+Brlapi==0.6.7
 certifi==2018.8.24
 chardet==3.0.4
 Click==7.0
 cryptography==2.6.1
+cupshelpers==1.0
 cycler==0.10.0
 decorator==4.3.0
 defusedxml==0.5.0
+distro-info==0.21
+dj-database-url==0.5.0
 Django==1.11.23
+django-heroku==0.3.1
 entrypoints==0.3
 feedparser==5.2.1
 gitdb2==2.0.6
 GitPython==3.0.2
+gunicorn==20.0.4
 html5lib==1.0.1
 httplib2==0.11.3
 idna==2.6
@@ -27,6 +33,7 @@ jupyter-core==4.4.0
 keyring==17.1.1
 keyrings.alt==3.1.1
 kiwisolver==1.0.1
+louis==3.8.0
 lxml==4.3.2
 MarkupSafe==1.1.0
 matplotlib==3.0.2
@@ -40,7 +47,6 @@ notebook==5.7.8
 numexpr==2.6.9
 numpy==1.16.2
 olefile==0.46
-pandas==0.23.3+dfsg
 pandocfilters==1.4.2
 patsy==0.5.1
 pexpect==4.6.0
@@ -48,6 +54,7 @@ pickleshare==0.7.5
 Pillow==5.4.1
 prometheus-client==0.6.0
 prompt-toolkit==1.0.15
+psycopg2==2.8.4
 py4j==0.10.7
 pycairo==1.16.2
 pycrypto==2.6.1
@@ -75,6 +82,7 @@ requests==2.21.0
 scipy==1.1.0
 SecretStorage==2.3.1
 Send2Trash==1.5.0
+django-simple-history==2.8.0
 simplegeneric==0.8.1
 six==1.12.0
 smmap2==2.0.5
@@ -92,4 +100,5 @@ urllib3==1.24.1
 virtualenv==16.7.5
 wcwidth==0.1.7
 webencodings==0.5.1
+whitenoise==5.0.1
 widgetsnbextension==2.0.0

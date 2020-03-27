@@ -1,7 +1,7 @@
 .header {
     position: relative;
     height: 10%;
-    background: #FEDFC0; border: 2px solid #7B5427;
+    background: #C0DFFE; border: 2px solid #7B5427;
 }
 
 .logout {
@@ -25,7 +25,7 @@
 }
 
 .tr_css {
-    position: absolute
+    position: absolute;
     border: 1px solid blue;
     height: 100%;
 }

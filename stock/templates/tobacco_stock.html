@@ -10,15 +10,15 @@
                 	<b> Название </b>
                 </td>
                 <td class="tdr_index">
-                	<b> Количество </b>
+                	<b> Вес(г) </b>
                 </td>
                 <td class="tdr_index">
-                	<b> Стоимость </b>
+                	<b> Стоимость (за забивку в 25 г) </b>
                 </td>
             </tr>
 			{% for tobacco in tobaccos %}
 			<tr class="tdr_index">
-				<td class="tdr_index"><a href="{% url 'history' 0 tobacco.id %}"> {{ tobacco.name }} </a></td>
+				<td class="tdr_index"> {{ tobacco.name }} </td>
 				<td class="tdr_index"> {{ tobacco.weight }} грамм </td>
 				<td class="tdr_index"> {{ tobacco.cost }} </td>
 			</tr>

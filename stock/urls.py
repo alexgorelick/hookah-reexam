@@ -22,5 +22,5 @@ urlpatterns = [
     url(r'^tobacco_stock/$', views.tobacco_stock, name='tobacco_stock'),
     url(r'^food_stock/$', views.food_stock, name='food_stock'),
     url(r'^new_bill/$', views.new_bill, name='new_bill'),
-    url(r'^history/(?P<type>[0-9]+)/(?P<id>[0-9]+)/$', views.history, name='history'),
+    url(r'^delivery/$', views.delivery, name='delivery'),
 ]

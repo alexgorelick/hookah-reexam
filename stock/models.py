@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from simple_history.models import HistoricalRecords
 
 import datetime
 
@@ -10,7 +9,6 @@ class Tobacco(models.Model):
     cost = models.IntegerField('Стоимость табака', default=0)
 
     id = models.AutoField(primary_key=True)
-    history = HistoricalRecords()
 
     def __str__(self):
         return str(self.name) + " (" + str(self.weight) + ")"
@@ -21,19 +19,34 @@ class Food(models.Model):
     cost = models.IntegerField('Стоимость товара', default=0)
 
     id = models.AutoField(primary_key=True)
-    history = HistoricalRecords()
 
     def __str__(self):
         return str(self.name) + " (" + str(self.count) + ")"
 
-class Bill(models.Model):
-    id_user = models.IntegerField('ID клиента')
-    promocode = models.CharField('Промокод', max_length=10, default="")
-
+class BillTobacco(models.Model):
     id = models.AutoField(primary_key=True)
-    history = HistoricalRecords()
-
-    food = models.ManyToManyField(Food, blank=True)
+    bill_id = models.ForeignKey('Bill', on_delete=models.CASCADE)
+    tobacco_id = models.ForeignKey('Tobacco', on_delete=models.CASCADE)
+    count = models.IntegerField('Количество табака')
 
     def __str__(self):
-        return "Заказ №" + str(self.id)	 
+        return str(self.tobacco_id.name) + " (" + str(self.count) + ")"
+
+class BillFood(models.Model):
+    id = models.AutoField(primary_key=True)
+    bill_id = models.ForeignKey('Bill', on_delete=models.CASCADE)
+    food_id = models.ForeignKey('Food', on_delete=models.CASCADE)
+    count = models.IntegerField('Количество')
+
+    def __str__(self):
+        return str(self.food_id.name) + " (" + str(self.count) + ")"
+
+class Bill(models.Model):
+    id_user = models.IntegerField('ID клиента')
+    id = models.AutoField(primary_key=True)
+    sum = models.IntegerField('Итоговая сумма', default=0)
+    tobaccos = models.ManyToManyField(BillTobacco, blank=True)
+    foods = models.ManyToManyField(BillFood, blank=True)
+
+    def __str__(self):
+        return "Заказ №" + str(self.id)

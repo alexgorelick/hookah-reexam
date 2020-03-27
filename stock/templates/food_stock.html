@@ -16,7 +16,7 @@
             </tr>
 			{% for f in food %}
 			<tr class="tdr_index">
-				<td class="tdr_index"><a href="{% url 'history' 1 f.id %}">  {{ f.name }} </a></td>
+				<td class="tdr_index">  {{ f.name }} </td>
 				<td class="tdr_index"> {{ f.count }} шт. </td>
                 <td class="tdr_index"> {{ f.cost }} руб. </td>
 			</tr>

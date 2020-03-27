@@ -10,40 +10,11 @@
         var tobacco_costs = [{% for f in tobaccos %} {{ f.cost }}, {% endfor %}];
         var tobacco_ids = [{% for f in tobaccos %} {{ f.id }}, {% endfor %}];
 
-        function food_cost(id) {
-            let curr_id = $("#select_food" + id)[0].value
-            let counts = $("#count_food" + id)[0].value
-            $("#f" + id)[0].innerText =  food_costs[food_ids.findIndex(element => (element == curr_id))] * counts
-            total_sum()
-        }
-
-        function hookah_cost(id) {
-            let curr_id = $("#select_tobacco" + id)[0].value
-            let counts = $("#count_tobacco" + id)[0].value
-            $("#t" + id)[0].innerText =  tobacco_costs[tobacco_ids.findIndex(element => (element == curr_id))] * counts / 25
-            total_sum()
-        }
-
-        function total_sum() {
-            var sum = 0
-            for (let i = 1; i < flast; i++) {
-                sum += Number($("#f" + i)[0].innerText)
-            }
-
-            for (let i = 1; i < tlast; i++) {
-                sum += Number($("#t" + i)[0].innerText)
-            }
-            $("#sum")[0].innerText = sum
-            document.getElementById("total_sum").value = sum
-        }
-
         $(document).ready(function() {
             $("#add").click(function() {
                 $("#food tr:last-child").before($("<tr class='tdr_index'><td class='tdr_index'><select id=\"select_food" + flast +
-                    "\" name=\"food" + flast + "\" onchange=\"food_cost(" + flast +
-                    ")\">{% for f in food %}<option value={{ f.id }}> {{ f }} </option>{% endfor %}</select></td><td class='tdr_index'><input id=\"count_food" +
-                    flast + "\" name=\"count_food" + flast + "\" onchange=\"food_cost(" + flast + ")\" class='s' type='number' min='0' value='0'/></td><td id=\"f" + flast +
-                    "\" class='tdr_index'> 0 </td></tr>"));
+                    "\" name=\"food" + flast + "\">{% for f in food %}<option value={{ f.id }}> {{ f }} </option>{% endfor %} </select></td><td class='tdr_index'><input id=\"count_food" +
+                    flast + "\" name=\"count_food" + flast + "\" class='s' type='number' min='0' value='0'/></td></tr>"));
                 $("#flast")[0].innerText = flast
                 document.getElementById("food_count").value = flast
                 flast++;
@@ -58,8 +29,7 @@
                 $("#hookah tr:last-child").before($("<tr class='tdr_index'><td class='tdr_index'><select id=\"select_tobacco" + tlast +
                     "\" name=\"tobacco" + tlast + "\" onchange=\"hookah_cost(" + tlast +
                     ")\">{% for f in tobaccos %}<option value={{ f.id }}> {{ f }} </option>{% endfor %}</select></td><td class='tdr_index'><input id=\"count_tobacco" +
-                    tlast + "\" name=\"count_tobacco" + tlast + "\" onchange=\"hookah_cost(" + tlast + ")\" class='s' type='number' min='0' value='0'/></td><td id=\"t" + tlast +
-                    "\" class='tdr_index'> 0 </td></tr>"));
+                    tlast + "\" name=\"count_tobacco" + tlast + "\" class='s' type='number' min='0' value='0'/></td></tr>"));
                 document.getElementById("hookah_count").value = tlast
                 $("#tlast")[0].innerText = tlast
                 tlast++;
@@ -70,10 +40,10 @@
         });
     </script>
 
-	<h1> Новый счет </h1>
-    <form id="bill_form" method="post"> {% csrf_token %}
-    	{{ form.as_p }}
-    	<h2> Кальяны </h2>
+	<h1> Завоз товаров </h1>
+    <form method="post"> {% csrf_token %}
+    	<h2> Табаки </h2>
+        <h3> Пополнение находящихся в наличии товаров</h3>
         <table id="hookah" class="table_index">
             <tr class="tdr_index">
                 <td class="tdr_index">
@@ -83,17 +53,34 @@
                 <td class="tdr_index">
                 	<b> Количество табака(г) </b>
                 </td>
+            </tr>
+            <tr class="tdr_index">
+                <td colspan="2" class="tdr_index">
+                    <button type="button" id="add1">Зарегистрировать привоз наличествующего табака</button>
+                </td>
+            </tr>
+        </table>
+        <h3> Добавление новых товаров</h3>
+        <table id="new_hookah" class="table_index">
+            <tr class="tdr_index">
                 <td class="tdr_index">
-                    <b> Стоимость(стандартная забивка - 25 г) </b>
+                    <b> Табаки </b>
+                </td>
+                <td class="tdr_index">
+                	<b> Количество табака(г) </b>
+                </td>
+                <td class="tdr_index">
+                	<b> Стоимость </b>
                 </td>
             </tr>
             <tr class="tdr_index">
                 <td colspan="3" class="tdr_index">
-                    <button type="button" id="add1">Добавить новый кальян</button>
+                    <button type="button" id="new1">Добавить новый табак </button>
                 </td>
             </tr>
         </table>
     	<h2> Еда </h2>
+        <h3> Пополнение находящихся в наличии товаров</h3>
         <table id="food" class="table_index">
             <tr class="tdr_index">
                 <td class="tdr_index">
@@ -102,22 +89,34 @@
                 <td class="tdr_index">
                 	<b> Количество товара </b>
                 </td>
+            </tr>
+			<tr class="tdr_index">
+				<td colspan="2" class="tdr_index">
+					<button type="button" id="add">Зарегистрировать пополнение еды и напитков</button>
+				</td>
+			</tr>
+        </table>
+        <h3> Добавление новых товаров</h3>
+        <table id="new_food" class="table_index">
+            <tr class="tdr_index">
                 <td class="tdr_index">
-                    <b> Cтоимость </b>
+                	<b> Название товара </b>
+                </td>
+                <td class="tdr_index">
+                	<b> Количество товара </b>
+                </td>
+                <td class="tdr_index">
+                	<b> Стоимость </b>
                 </td>
             </tr>
 			<tr class="tdr_index">
 				<td colspan="3" class="tdr_index">
-					<button type="button" id="add">Добавить новый товар</button>
+					<button type="button" id="new">Добавить новый товар</button>
 				</td>
 			</tr>
         </table>
         <input type="hidden" id="hookah_count" name="hookah_count" value="0"/>
         <input type="hidden" id="food_count" name="food_count" value="0"/>
-        <input type="hidden" id="total_sum" name="total_sum" value="0"/>
-        <p>Заказано <output id="tlast">0</output> кальянов</p>
-        <p>Заказано <output id="flast">0</output> пунктов из меню</p>
-        <h2> Итого: <output id="sum"> 0 </output> руб. </h2>
-		<p><input type="submit" value="Открыть новый счет"></p>
+		<p><input type="submit" value="Оформить завоз товаров"></p>
     </form>
 {% endblock %}

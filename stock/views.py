@@ -4,9 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.template import loader
 from django.shortcuts import redirect, render, get_object_or_404
 
-from .models import Tobacco
+from .models import Tobacco, BillTobacco
 from .models import Food
-
+from .models import Bill
 from .forms import BillForm
 
 @login_required
@@ -17,30 +17,54 @@ def tobacco_stock(request):
 @login_required
 def food_stock(request):
     food = Food.objects.all()
-    print(food[2].history.all())
     return HttpResponse(render(request, 'food_stock.html', {"food" : food}))
 
+@login_required()
 def new_bill(request):
     if request.method == 'GET':
         form = BillForm()
         food = Food.objects.all()
-        return HttpResponse(render(request, 'new_bill.html', {"form" : form, "food" : food}))
+        tobaccos = Tobacco.objects.all()
+        return HttpResponse(render(request, 'new_bill.html', {"form" : form, "food" : food, "tobaccos": tobaccos}))
     else:
         form = BillForm(request.POST, request.FILES)
+        print(request.POST)
+        new_bill = Bill(id_user=request.POST['id_user'], sum=request.POST['total_sum'])
+        new_bill.save()
+        for i in range(1, int(request.POST['hookah_count']) + 1):
+            print(request.POST['tobacco' + str(i)])
+            curr_tobacco = Tobacco.objects.get(id=int(request.POST['tobacco' + str(i)]))
+            delta = int(request.POST['count_tobacco' + str(i)])
+            curr_tobacco.weight -= delta
+            curr_tobacco.save()
+        for i in range(1, int(request.POST['food_count']) + 1):
+            print(request.POST['food' + str(i)])
+            curr_food = Food.objects.get(id=int(request.POST['food' + str(i)]))
+            delta = int(request.POST['count_food' + str(i)])
+            curr_food.count -= delta
+            curr_food.save()
+        return redirect('home')
 
-        if form.is_valid():
-            new_bill = form.save(commit=False)
-            new_bill.save()
+@login_required()
+def delivery(request):
+    if request.method == 'GET':
+        food = Food.objects.all()
+        tobaccos = Tobacco.objects.all()
+        return HttpResponse(render(request, 'delivery.html', {"food" : food, "tobaccos": tobaccos}))
+    else:
+        print(request.POST)
+        for i in range(1, int(request.POST['hookah_count']) + 1):
+            print(request.POST['tobacco' + str(i)])
+            curr_tobacco = Tobacco.objects.get(id=int(request.POST['tobacco' + str(i)]))
+            delta = int(request.POST['count_tobacco' + str(i)])
+            curr_tobacco.weight += delta
+            curr_tobacco.save()
 
-            return redirect('home')
+        for i in range(1, int(request.POST['food_count']) + 1):
+            print(request.POST['food' + str(i)])
+            curr_food = Food.objects.get(id=int(request.POST['food' + str(i)]))
+            delta = int(request.POST['count_food' + str(i)])
+            curr_food.count += delta
+            curr_food.save()
 
-@login_required
-def history(request, type, id):
-    if type == '0':
-        obj = get_object_or_404(Tobacco, id=id)
-        return HttpResponse(render(request, 'history.html', {"obj" : obj}))
-    elif type == '1':
-        obj = get_object_or_404(Food, id=id)
-        return HttpResponse(render(request, 'history.html', {"obj" : obj}))
-
-    return HttpResponse('hi')
+        return redirect('home')

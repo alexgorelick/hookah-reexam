@@ -1,1 +1,1 @@
-web: gunicorn hookah.wsgi
+web: gunicorn mipt-hc.wsgi

@@ -10,6 +10,9 @@
         var tobacco_costs = [{% for f in tobaccos %} {{ f.cost }}, {% endfor %}];
         var tobacco_ids = [{% for f in tobaccos %} {{ f.id }}, {% endfor %}];
 
+        var new_flast = 1;
+        var new_tlast = 1;
+
         $(document).ready(function() {
             $("#add").click(function() {
                 $("#food tr:last-child").before($("<tr class='tdr_index'><td class='tdr_index'><select id=\"select_food" + flast +
@@ -25,6 +28,20 @@
         });
 
         $(document).ready(function() {
+            $("#new").click(function() {
+                $("#new_food tr:last-child").before($("<tr class='tdr_index'><td class='tdr_index'><input name=\"newf" + new_flast +
+                    "\"></td><td class='tdr_index'><input id=\"newf_count" + new_flast + "\" name=\"newf_count" + new_flast +
+                    "\" class='s' type='number' min='0' value='0'></td><td class='tdr_index'><input name = \"newf_cost" + new_flast + "\"></input></td></tr>"));
+                $("#newf_number")[0].innerText = new_flast
+                document.getElementById("newf_number").value = new_flast
+                new_flast++;
+            });
+            $(".s").change(function() {
+                alert( "Handler for .change() called." );
+            });
+        });
+
+        $(document).ready(function() {
             $("#add1").click(function() {
                 $("#hookah tr:last-child").before($("<tr class='tdr_index'><td class='tdr_index'><select id=\"select_tobacco" + tlast +
                     "\" name=\"tobacco" + tlast + "\" onchange=\"hookah_cost(" + tlast +
@@ -33,6 +50,20 @@
                 document.getElementById("hookah_count").value = tlast
                 $("#tlast")[0].innerText = tlast
                 tlast++;
+            });
+            $(".s").change(function() {
+                alert( "Handler for .change() called." );
+            });
+        });
+
+        $(document).ready(function() {
+            $("#new1").click(function() {
+                $("#new_hookah tr:last-child").before($("<tr class='tdr_index'><td class='tdr_index'><input name=\"newt" + new_tlast +
+                    "\"></td><td class='tdr_index'><input id=\"newt_count" + new_tlast + "\" name=\"newt_count" + new_tlast +
+                    "\" class='s' type='number' min='0' value='0'></td><td class='tdr_index'><input name = \"newt_cost" + new_tlast + "\"></input></td></tr>"));
+                $("#newt_number")[0].innerText = new_tlast
+                document.getElementById("newt_number").value = new_tlast
+                new_tlast++;
             });
             $(".s").change(function() {
                 alert( "Handler for .change() called." );
@@ -117,6 +148,8 @@
         </table>
         <input type="hidden" id="hookah_count" name="hookah_count" value="0"/>
         <input type="hidden" id="food_count" name="food_count" value="0"/>
+        <input type="hidden" id="newt_number" name="newt_number" value="0"/>
+        <input type="hidden" id="newf_number" name="newf_number" value="0"/>
 		<p><input type="submit" value="Оформить завоз товаров"></p>
     </form>
 {% endblock %}

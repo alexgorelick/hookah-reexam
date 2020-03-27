@@ -67,4 +67,20 @@ def delivery(request):
             curr_food.count += delta
             curr_food.save()
 
+        for i in range(1, int(request.POST['newf_number']) + 1):
+            name = request.POST['newf' + str(i)]
+            number = request.POST['newf_count' + str(i)]
+            price = request.POST['newf_cost' + str(i)]
+            if int(number) > 0:
+                curr_food = Food.objects.create(name=name, count=number, cost=price)
+                curr_food.save()
+
+        for i in range(1, int(request.POST['newt_number']) + 1):
+            name = request.POST['newt' + str(i)]
+            number = request.POST['newt_count' + str(i)]
+            price = request.POST['newt_cost' + str(i)]
+            if int(number) > 0:
+                curr_tobacco = Tobacco.objects.create(name=name, weight=number, cost=price)
+                curr_tobacco.save()
+
         return redirect('home')

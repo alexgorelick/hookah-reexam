@@ -4,7 +4,7 @@ bleach==3.1.2
 certifi==2018.8.24
 chardet==3.0.4
 Click==7.0
-cryptography==2.6.1
+cryptography==3.2
 cycler==0.10.0
 decorator==4.3.0
 defusedxml==0.5.0

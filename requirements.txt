@@ -68,7 +68,7 @@ python-gitlab==1.11.0
 pytz==2019.1
 pyxdg==0.26
 pyzmq==17.1.2
-reportlab==3.5.13
+reportlab==3.5.55
 requests==2.21.0
 scipy==1.1.0
 SecretStorage==2.3.1

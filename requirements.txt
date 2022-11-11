@@ -60,7 +60,7 @@ Pygments==2.3.1
 pyinotify==0.9.6
 pyparsing==2.2.0
 PySimpleSOAP==1.16.2
-pyspark==2.4.4
+pyspark==3.2.2
 python-dateutil==2.7.3
 python-debian==0.1.35
 python-debianbts==2.8.2
